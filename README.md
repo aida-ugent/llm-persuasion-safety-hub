@@ -1,4 +1,4 @@
-<div align="center">
+<!-- <div align="center">
   <img alt="Astro Cactus logo" src="https://github.com/user-attachments/assets/92dfbabf-ca65-4bf6-991d-9a71e5319880" width="70" />
 </div>
 <h1 align="center">
@@ -187,4 +187,4 @@ This theme was inspired by [Hexo Theme Cactus](https://github.com/probberechts/h
 
 ## License
 
-MIT
+MIT -->
