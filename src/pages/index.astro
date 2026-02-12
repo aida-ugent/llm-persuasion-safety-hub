@@ -1,21 +1,9 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import PostPreview from "@/components/blog/PostPreview.astro";
 import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
-import { getAllPosts } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
-
-// Posts
-const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
-const latestPosts = allPostsByDate.slice(0, MAX_POSTS);
-
-// Pinned Posts, set to a max of 3;
-const MAX_PINNED_POSTS = 3;
-const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
 
 // Notes
 const MAX_NOTES = 5;
@@ -26,55 +14,58 @@ const latestNotes = allNotes
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-12">Hello World!</h1>
+	<!-- <section>
+		<h1 class="title mb-6">LLM Persuasion Hub</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, a simple starter that you can use to create your website or blog.
-			If you want to know more about how you can customise me, add more posts, and make it your own,
-			click on the GitHub icon link below and it will take you to my repo.
+			A curated collection of datasets, codebases, and research related to persuasive techniques and
+			behavior change in large language models.
+		</p>
+		<p class="mb-6">
+			Explore the <a href="/resources/">Resources</a> to find datasets, codebases, and papers. <a
+				href="/contact/">Contact us</a
+			> to contribute or provide feedback.
 		</p>
 		<SocialList />
-	</section>
-	{
-		pinnedPosts.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-				<ul class="space-y-4" role="list">
-					{pinnedPosts.map((p) => (
-						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-							<PostPreview post={p} />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
-			{
-				latestPosts.map((p) => (
-					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
+	</section> -->
+
+	<h1 class="title mb-8">Welcome</h1>
+	<div class="prose prose-sm prose-cactus max-w-none">
+		<p>
+			<strong>Safe Persuasion Hub</strong> is a collection of datasets and codebases used to study and
+			evaluate persuasion in large language models (LLMs). The goal is to bring together the most relevant
+			resources as they emerge, making safety-relevant research easier to discover, compare, and reproduce.
+		</p>
+		<h3>What is included</h3>
+		<ul class="list-inside list-disc">
+			<li>
+				<strong>Research papers</strong> — that provide either a dataset, open source code or both.
+			</li>
+			<li>
+				<strong>Datasets</strong> — link & a short description of the dataset used in the mentioned research
+				paper.
+			</li>
+			<li>
+				<strong>Codebases</strong> — link & a short description of the codebase used in the mentioned
+				research paper.
+			</li>
 		</ul>
-	</section>
-	{
-		latestNotes.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">Notes</a>
-				</h2>
-				<ul class="space-y-6" role="list">
-					{latestNotes.map((note) => (
-						<li>
-							<Note note={note} as="h3" isPreview />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
+		<h3>Adding new resources</h3>
+		<p>
+			If you know of a relevant resource, there are two ways to add it:
+			<ul class="list-inside list-disc">
+				<li>
+					<strong>Contact us</strong> — share the resource with us by reaching out via the <a
+						href="/contact/">contact form</a
+					>.
+				</li>
+				<li>
+					<strong>GitHub</strong> — add it to the website's <a
+						href="https://github.com/kamiledementaviciute/llm-persuasion-resource-hub"
+						target="_blank"
+						rel="noreferrer">GitHub repository</a
+					> and raise a pull request.
+				</li>
+			</ul>
+		</p>
+	</div>
 </PageLayout>
