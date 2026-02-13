@@ -21,6 +21,11 @@ type ResourceItem = {
 	code: ResourceLink | null;
 };
 
+const getResourceUrl = (link: ResourceLink) => (typeof link === "string" ? link : link.url);
+
+const getResourceDescription = (link: ResourceLink, fallback: string) =>
+	typeof link === "string" ? fallback : link.description;
+
 // Example resource entries (you can expand this list)
 const resources: ResourceItem[] = [
 	{
@@ -71,6 +76,8 @@ const resources: ResourceItem[] = [
 		code: null,
 	},
 ];
+
+const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 ---
 
 <PageLayout meta={meta}>
@@ -107,9 +114,7 @@ const resources: ResourceItem[] = [
 						{resource.dataset && (
 							<div class="flex items-start gap-3">
 								<a
-									href={
-										typeof resource.dataset === "string" ? resource.dataset : resource.dataset.url
-									}
+									href={getResourceUrl(resource.dataset)}
 									target="_blank"
 									rel="noreferrer"
 									class="bg-accent text-accent-content mt-0.5 inline-block flex-shrink-0 rounded px-3 py-1 text-xs font-semibold dark:text-gray-900"
@@ -117,16 +122,14 @@ const resources: ResourceItem[] = [
 									📊 Dataset
 								</a>
 								<p class="text-sm">
-									{typeof resource.dataset === "string"
-										? "Link to the dataset."
-										: resource.dataset.description}
+									{getResourceDescription(resource.dataset, "Link to the dataset.")}
 								</p>
 							</div>
 						)}
 						{resource.code && (
 							<div class="flex items-start gap-3">
 								<a
-									href={typeof resource.code === "string" ? resource.code : resource.code.url}
+									href={getResourceUrl(resource.code)}
 									target="_blank"
 									rel="noreferrer"
 									class="bg-accent text-accent-content mt-0.5 inline-block flex-shrink-0 rounded px-3 py-1 text-xs font-semibold dark:text-gray-900"
@@ -134,9 +137,7 @@ const resources: ResourceItem[] = [
 									💻 Code
 								</a>
 								<p class="text-sm">
-									{typeof resource.code === "string"
-										? "Link to the code repository."
-										: resource.code.description}
+									{getResourceDescription(resource.code, "Link to the code repository.")}
 								</p>
 							</div>
 						)}
@@ -153,7 +154,7 @@ const resources: ResourceItem[] = [
 			<ul class="list-inside list-disc">
 				<li>
 					<strong>Contact us</strong> — email us the resource information, details in the <a
-						href="/contact/">Contact</a
+						href={withBase("/contact/")}>Contact</a
 					> page.
 				</li>
 				<li>

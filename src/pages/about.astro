@@ -5,6 +5,8 @@ const meta = {
 	description: "About the Safe Persuasion Hub",
 	title: "About",
 };
+
+const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 ---
 
 <PageLayout meta={meta}>
@@ -38,8 +40,8 @@ const meta = {
 		</ul>
 		<h3>How to contribute</h3>
 		<p>
-			If you know of a relevant resource, please <a href="/contact/">contact us</a> or submit an issue
-			or pull request on our <a
+			If you know of a relevant resource, please <a href={withBase("/contact/")}>contact us</a> or submit
+			an issue or pull request on our <a
 				href="https://github.com/kamiledementaviciute/llm-persuasion-resource-hub"
 				target="_blank"
 				rel="noreferrer">GitHub repository</a

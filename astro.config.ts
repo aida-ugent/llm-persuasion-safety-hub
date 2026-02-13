@@ -19,9 +19,12 @@ import { remarkGithubCard } from "./src/plugins/remark-github-card";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
+const basePath = new URL(siteConfig.url).pathname;
+
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.url,
+	base: basePath,
 	image: {
 		domains: ["webmention.io"],
 	},
@@ -55,7 +58,7 @@ export default defineConfig({
 					type: "image/png",
 				},
 			],
-			start_url: "/",
+			start_url: basePath,
 			background_color: "#1d1f21",
 			theme_color: "#2bbc8a",
 			display: "standalone",
