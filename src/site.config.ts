@@ -27,7 +27,7 @@ export const siteConfig: SiteConfig = {
 	*/
 	title: "Safe Persuasion Hub",
 	// ! Please remember to replace the following site property with your own domain, used in astro.config.ts
-	url: "https://example.com/",
+	url: "https://aida-ugent.github.io/safe-persuasion-resource-hub/",
 };
 
 // Used to generate links in both the Header & Footer.
