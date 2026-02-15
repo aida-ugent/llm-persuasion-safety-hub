@@ -1,7 +1,7 @@
-<!-- ---
+---
 title: "Example OG Social Image"
 publishDate: "27 January 2023"
-description: "An example post for , detailing how to add a custom social image card in the frontmatter"
+description: "An example post showing how to add a custom social image card in frontmatter"
 tags: ["example", "blog", "image"]
 ogImage: "/social-card.png"
 ---
@@ -17,6 +17,6 @@ If you open this markdown file `src/content/post/social-image.md` you'll see the
 ogImage: "/social-card.png"
 ```
 
-You can view the one set for this template page [here](https://.png).
+You can view the one set for this template page [here](/social-card.png).
 
-[^1]: The image itself can be located anywhere you like. -->
+[^1]: The image itself can be located anywhere you like.
