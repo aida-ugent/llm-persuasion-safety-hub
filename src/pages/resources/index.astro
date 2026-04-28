@@ -24,6 +24,7 @@ type DatasetLink =
 	| string
 	| {
 			url: string | null;
+			name: string;
 			description: string;
 	  };
 
@@ -36,17 +37,18 @@ type ResourceItem = {
 	studyWebsite: LinkWithUrl | null;
 	dataset: DatasetLink | DatasetLink[] | null;
 	code: ResourceLink | null;
+	personalisation: boolean;
+	strategy: boolean;
 };
 
 const getResourceUrl = (link: LinkWithUrl) => (typeof link === "string" ? link : link.url);
-
-const getResourceLabel = (link: LinkWithUrl, fallback: string) =>
-	typeof link === "string" ? fallback : (link.label ?? fallback);
 
 const getResourceDescription = (link: ResourceLink | DatasetLink, fallback: string) =>
 	typeof link === "string" ? fallback : link.description;
 
 const getResourceHref = (link: DatasetLink) => (typeof link === "string" ? link : link.url);
+
+const getDatasetName = (link: DatasetLink) => (typeof link === "string" ? "Dataset" : link.name);
 
 const getResourceLinks = (links: DatasetLink | DatasetLink[] | null) => {
 	if (!links) return [];
@@ -81,6 +83,7 @@ const resources: ResourceItem[] = [
 		studyWebsite: "https://persugpt.github.io",
 		dataset: {
 			url: "https://github.com/PersuGPT/PersuGPT.github.io/blob/main/DailyPersuasion_full_version.zip",
+			name: "DailyPersuasion",
 			description:
 				"DailyPersuasion: A dataset covering 13,000 dialogue scenarios across 35 distinct domains.",
 		},
@@ -88,6 +91,8 @@ const resources: ResourceItem[] = [
 			url: "https://persugpt.github.io",
 			description: "Code for the PersuGPT model and data collection framework.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title:
@@ -99,6 +104,7 @@ const resources: ResourceItem[] = [
 		studyWebsite: null,
 		dataset: {
 			url: "https://huggingface.co/datasets/APauli/Persuasive-Pairs",
+			name: "Persuasive-Pairs",
 			description:
 				"<strong>Persuasive-Pairs</strong>: 2,700 text pairs from news, debates, and chats. Each includes an LLM-rewritten version with varying persuasiveness, validated by three human annotators.",
 		},
@@ -107,6 +113,8 @@ const resources: ResourceItem[] = [
 			description:
 				"A trained regression model model to evaluate the relative persuasiveness between two text samples.",
 		},
+		personalisation: false,
+		strategy: false,
 	},
 	{
 		title: "MakeMeSay, OpenAI o3-mini System Card",
@@ -121,6 +129,8 @@ const resources: ResourceItem[] = [
 			description:
 				"This evaluation tests a model’s ability to generate persuasive or manipulative text, specifically in the setting of a game where one AI system has to get the other party (an AI system simulating a human) to say a specific codeword without arousing suspicion.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title: "MakeMePay, OpenAI o3-mini System Card",
@@ -135,6 +145,8 @@ const resources: ResourceItem[] = [
 			description:
 				"This evaluation tests an AI system’s ability to generate persuasive or manipulative text, specifically in the setting of convincing another (simulated) entity to part with money.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title: "Among Them: A Game-Based Framework for Assessing Persuasion Capabilities of LLMs",
@@ -154,14 +166,17 @@ const resources: ResourceItem[] = [
 		studyWebsite: null,
 		dataset: {
 			url: "https://doi.org/10.5281/zenodo.14935395",
+			name: "Game logs",
 			description:
 				"Logs and transcripts from simulated social deduction games used to analyze model behavior.",
 		},
 		code: {
 			url: "https://github.com/Farmerobot/among_them",
 			description:
-				"A simulation platform inspired by 'Among Us' for testing persuasive and deceptive capabilities in LLMs.",
+				"A simulation platform inspired by ‘Among Us’ for testing persuasive and deceptive capabilities in LLMs.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title:
@@ -174,6 +189,7 @@ const resources: ResourceItem[] = [
 		studyWebsite: "https://beyzabozdag.github.io/PMIYC",
 		dataset: {
 			url: "https://github.com/beyzabozdag/PersuadeMeIfYouCan/tree/main/data",
+			name: "PMIYC benchmark",
 			description:
 				"Benchmark data used to measure shifts in model and user opinions across controversial topics. The dataset comprises 961 subjective claims spanning political, ethical, and social issues sourced from Durmus et al. and the Perspectrum dataset, alongside 817 factual misinformation question-answer pairs adapted from the TruthfulQA benchmark.",
 		},
@@ -181,21 +197,26 @@ const resources: ResourceItem[] = [
 			url: "https://github.com/beyzabozdag/PersuadeMeIfYouCan",
 			description: "Code for the multi-agent simulation framework.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title: "Measuring and Improving Persuasiveness of Large Language Models",
 		year: "2024",
 		authors: ["Somesh Singh", "Yaman K Singla", "Harini SI", "Balaji Krishnamurthy"],
 		description:
-			"Introduces PersuasionBench and PersuasionArena to evaluate LLM generative and simulative persuasion capabilities, including the task of 'transsuasion'.",
+			"Introduces PersuasionBench and PersuasionArena to evaluate LLM generative and simulative persuasion capabilities, including the task of ‘transsuasion’.",
 		paper: "https://arxiv.org/abs/2410.02653",
 		studyWebsite: "https://behavior-in-the-wild.github.io/measure-persuasion",
 		dataset: {
 			url: "https://huggingface.co/datasets/behavior-in-the-wild/PersuasionArena",
+			name: "PersuasionArena",
 			description:
 				"The PersuasionArena dataset for evaluating LLM persuasion across different tasks consists of tweet pairs where two tweets from the same account have similar content and were posted in close temporal proximity, but received significantly different engagement (e.g., number of likes). These differences act as a proxy for persuasiveness, allowing models to be trained and evaluated on generating or ranking more persuasive content.",
 		},
 		code: null,
+		personalisation: false,
+		strategy: false,
 	},
 	{
 		title:
@@ -212,6 +233,8 @@ const resources: ResourceItem[] = [
 			description:
 				"APE framework for measuring persuasion attempts. Includes topics, prompts and code for generating a synthetic dataset.",
 		},
+		personalisation: false,
+		strategy: false,
 	},
 	{
 		title: "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
@@ -227,6 +250,8 @@ const resources: ResourceItem[] = [
 			description:
 				"The MARBLE framework for multi-agent collaboration and competition evaluation. ",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 
 	{
@@ -242,6 +267,8 @@ const resources: ResourceItem[] = [
 			url: "https://github.com/google/werewolf_arena",
 			description: "Code and prompt templates for the Werewolf Arena simulation framework.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 	{
 		title: "Measuring the Persuasiveness of Language Models",
@@ -263,10 +290,13 @@ const resources: ResourceItem[] = [
 		studyWebsite: null,
 		dataset: {
 			url: "https://huggingface.co/datasets/Anthropic/persuasion",
+			name: "Persuasion dataset",
 			description:
 				"The Persuasion Dataset contains claims and corresponding human-written and model-generated arguments, along with persuasiveness scores.",
 		},
 		code: null,
+		personalisation: false,
+		strategy: false,
 	},
 
 	{
@@ -287,6 +317,7 @@ const resources: ResourceItem[] = [
 		studyWebsite: "",
 		dataset: {
 			url: "https://github.com/ohyj1002/persuasionforgood/tree/master/data",
+			name: "PersuasionForGood",
 			description:
 				"PersuasionForGood (P4G) dataset with AnnotatedData (300) and FullData (1,017) dialogues.",
 		},
@@ -294,6 +325,8 @@ const resources: ResourceItem[] = [
 			url: "https://github.com/ohyj1002/persuasionforgood",
 			description: "", //code for classifier model?
 		},
+		personalisation: true,
+		strategy: true,
 	},
 	{
 		title:
@@ -301,17 +334,19 @@ const resources: ResourceItem[] = [
 		year: "2016",
 		authors: ["Ivan Habernal", "Iryna Gurevych"],
 		description:
-			"A comprehensive study shift from normative logic to empirical 'convincingness.' It provides 26k natural language explanations for why one argument is better than another, identifying 17 qualitative dimensions like 'no credible evidence,' 'off-topic,' or 'well-thought-of.'",
+			"A comprehensive study shift from normative logic to empirical ‘convincingness.’ It provides 26k natural language explanations for why one argument is better than another, identifying 17 qualitative dimensions like ‘no credible evidence,’ ‘off-topic,’ or ‘well-thought-of.’",
 		paper: "https://aclanthology.org/D16-1129/",
 		studyWebsite: null,
 		dataset: [
 			{
 				url: "https://github.com/UKPLab/acl2016-convincing-arguments/tree/master/data",
+				name: "UKPConvArg1",
 				description:
 					"UKPConvArg1: 16k argument pairs with pairwise labels and a ranking-based version (UKPConvArgRank) for 1k arguments.",
 			},
 			{
 				url: "https://tudatalib.ulb.tu-darmstadt.de/items/4198f487-1b64-463b-a0ae-a678121f391f",
+				name: "UKPConvArg2",
 				description:
 					"UKPConvArg2: 9k argument pairs annotated with 17 specific reasons/flaws explaining the convincingness of each choice.",
 			},
@@ -321,165 +356,91 @@ const resources: ResourceItem[] = [
 			description:
 				"Source code for SVM and Bi-LSTM models used to predict qualitative properties and label distributions.",
 		},
+		personalisation: false,
+		strategy: true,
 	},
 
-	// {
-	// 	title: "Automatic Argument Quality Assessment - New Datasets and Methods",
-	// 	year: "2019",
-	// 	authors: ["Assaf Toledo", "Shai Gretz", "Edo Cohen‑Karlik", "others"],
-	// 	description:
-	// 		"Actively collected 6.3k individual arguments with quality labels and 14k argument pairs with pairwise convincingness judgments, released by IBM Project Debater.",
-	// 	paper: "https://arxiv.org/pdf/1909.01007.pdf",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "https://huggingface.co/datasets/ibm-research/argument_quality_ranking_30k",
-	// 		description:
-	// 			"IBM-ArgQ (6.3kArgs & 14kPairs). IBM argument quality ranking dataset (related release) with ~30k items.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "Winning-Arguments / ChangeMyView (CMV)",
-	// 	year: "2016",
-	// 	authors: ["Chenhao Tan", "Vlad Niculae", "Cristian Danescu-Niculescu-Mizil", "Lillian Lee"],
-	// 	description:
-	// 		"CMV conversations linking arguments to opinion change (Δ) outcomes; includes paired successful vs. matched unsuccessful threads.",
-	// 	paper: "http://chenhaot.com/pages/changemyview.html",
-	// 	studyWebsite: "https://convokit.cornell.edu/documentation/winning.html",
-	// 	dataset: {
-	// 		url: "https://chenhaot.com/data/cmv/README.txt",
-	// 		description: "Original CMV data and paired argument threads (training/held‑out).",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title:
-	// 		"Winning Arguments: Interaction Dynamics and Persuasion Strategies in Good-faith Online Discussions",
-	// 	year: "2016",
-	// 	authors: ["Chenhao Tan", "Vlad Niculae", "Cristian Danescu-Niculescu-Mizil", "Lillian Lee"],
-	// 	description:
-	// 		"Conversations scraped from the r/ChangeMyView subreddit tracking good-faith discussions and subsequent user opinion changes (indicated by awarding a Δ). It includes paired successful (persuasive) vs. matched unsuccessful (non-persuasive) threads.",
-	// 	paper: "https://arxiv.org/abs/1602.01103",
-	// 	studyWebsite: "",
-	// 	dataset: {
-	// 		url: "https://chenhaot.com/data/cmv/README.txt",
-	// 		description:
-	// 			"Original CMV data and paired argument threads (training/held‑out) annotated for persuasiveness based on user deltas.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "Webis-Clickbait-17",
-	// 	year: "2017",
-	// 	authors: [
-	// 		"Martin Potthast",
-	// 		"Tim Gollub",
-	// 		"Matti Wiegmann",
-	// 		"Benno Stein",
-	// 		"Matthias Hagen",
-	// 		"others",
-	// 	],
-	// 	description:
-	// 		"38,517 Twitter teaser posts from 27 US news publishers with 4‑point clickbait strength annotations; often used as a proxy for manipulative teaser design.",
-	// 	paper: "https://aclanthology.org/C18-1127/",
-	// 	studyWebsite: "https://webis.de/data/webis-clickbait-17.html",
-	// 	dataset: {
-	// 		url: "https://explore.openaire.eu/search/dataset?pid=10.5281%2Fzenodo.3346490",
-	// 		description: "Zenodo DOIs for training/test partitions via the Clickbait Challenge 2017.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "Propaganda Techniques Corpus (PTC)",
-	// 	year: "2019–2020",
-	// 	authors: [
-	// 		"Giovanni Da San Martino",
-	// 		"Seunghak Yu",
-	// 		"Alberto Barrón-Cedeño",
-	// 		"Rostislav Petrov",
-	// 		"Preslav Nakov",
-	// 	],
-	// 	description:
-	// 		"500+ news articles annotated at span level with 18 propaganda techniques; basis for SemEval‑2020 Task 11.",
-	// 	paper: "https://arxiv.org/abs/2003.11563",
-	// 	studyWebsite: "https://propaganda.math.unipd.it/ptc/",
-	// 	dataset: {
-	// 		url: "https://service.tib.eu/ldmservice/dataset/propaganda-techniques-corpus--ptc-",
-	// 		description:
-	// 			"Dataset hub + leaderboards; span identification and technique classification tasks.",
-	// 	},
-	// 	code: {
-	// 		url: "https://huggingface.co/QCRI/PropagandaTechniquesAnalysis-en-BERT",
-	// 		description: "Reference models for fine‑grained propaganda detection (BERT).",
-	// 	},
-	// },
 	{
-		title: "ElecDeb60to20",
-		year: "2023–2025",
-		authors: ["Pierpaolo Goffredo", "Mariana Chaves Espinoza", "Elena Cabrio", "Serena Villata"],
+		title: "Automatic Argument Quality Assessment - New Datasets and Methods",
+		year: "2019",
+		authors: ["Assaf Toledo", "Shai Gretz", "Edo Cohen‑Karlik", "others"],
 		description:
-			"U.S. presidential debate transcripts (1960–2020) annotated for logical fallacies at the utterance/span level, plus argumentative components and relations.",
-		paper: "https://openreview.net/pdf?id=Js80TDwMfY",
+			"Actively collected 6.3k individual arguments with quality labels and 14k argument pairs with pairwise convincingness judgments, released by IBM Project Debater.",
+		paper: "https://arxiv.org/pdf/1909.01007.pdf",
 		studyWebsite: null,
 		dataset: {
-			url: "https://github.com/pierpaologoffredo/ElecDeb60to20",
-			description: "Fallacy, argument component, and relationship annotations; debate‑level data.",
+			url: "https://huggingface.co/datasets/ibm-research/argument_quality_ranking_30k",
+			name: "IBM-ArgQ",
+			description:
+				"IBM-ArgQ (6.3kArgs & 14kPairs). IBM argument quality ranking dataset (related release) with ~30k items.",
+		},
+		code: null,
+		personalisation: false,
+		strategy: false,
+	},
+	{
+		title:
+			"Winning Arguments: Interaction Dynamics and Persuasion Strategies in Good-faith Online Discussions",
+		year: "2016",
+		authors: ["Chenhao Tan", "Vlad Niculae", "Cristian Danescu-Niculescu-Mizil", "Lillian Lee"],
+		description:
+			"Conversations scraped from the r/ChangeMyView subreddit tracking good-faith discussions and subsequent user opinion changes (indicated by awarding a Δ). It includes paired successful (persuasive) vs. matched unsuccessful (non-persuasive) threads.",
+		paper: "https://arxiv.org/abs/1602.01103",
+		studyWebsite: null,
+		dataset: {
+			url: "https://chenhaot.com/data/cmv/README.txt",
+			name: "ChangeMyView (CMV)",
+			description:
+				"Original CMV data and paired argument threads (training/held‑out) annotated for persuasiveness based on user deltas.",
+		},
+		code: null,
+		personalisation: false,
+		strategy: true,
+	},
+	{
+		title: "Webis-Clickbait-17",
+		year: "2017",
+		authors: [
+			"Martin Potthast",
+			"Tim Gollub",
+			"Matti Wiegmann",
+			"Benno Stein",
+			"Matthias Hagen",
+			"others",
+		],
+		description:
+			"38,517 Twitter teaser posts from 27 US news publishers with 4‑point clickbait strength annotations; often used as a proxy for manipulative teaser design.",
+		paper: "https://aclanthology.org/C18-1127/",
+		studyWebsite: "https://webis.de/data/webis-clickbait-17.html",
+		dataset: {
+			url: "https://explore.openaire.eu/search/dataset?pid=10.5281%2Fzenodo.3346490",
+			name: "Webis-Clickbait-17",
+			description: "Zenodo DOIs for training/test partitions via the Clickbait Challenge 2017.",
+		},
+		code: null,
+		personalisation: false,
+		strategy: true,
+	},
+	{
+		title: "PersuasiveToM",
+		year: "2025",
+		authors: ["Fangxu Yu", "Lai Jiang", "Shenyi Huang", "Zhen Wu", "Xinyu Dai"],
+		description:
+			"Benchmark assessing Theory of Mind in persuasive dialogues: tracking desires/beliefs/intentions and applying ToM to select/evaluate persuasion strategies.",
+		paper: "https://arxiv.org/abs/2502.21017",
+		studyWebsite: null,
+		dataset: {
+			url: "https://github.com/Yu-Fangxu/PersuasiveToM",
+			name: "PersuasiveToM",
+			description: "Benchmark data and evaluation scripts.",
 		},
 		code: {
-			url: "https://github.com/pierpaologoffredo/FallacyDetection",
-			description: "MultiFusion BERT and baselines for fallacy detection/classification.",
+			url: "https://github.com/Yu-Fangxu/PersuasiveToM",
+			description: "Reference implementation and evaluation runners.",
 		},
+		personalisation: true,
+		strategy: true,
 	},
-	// {
-	// 	title: "ElecDeb60-20: A Dataset for Fallacy Detection in Presidential Debates",
-	// 	year: "2023",
-	// 	authors: ["Pierpaolo Goffredo", "Mariana Chaves Espinoza", "Elena Cabrio", "Serena Villata"],
-	// 	description:
-	// 		"US presidential debate transcripts (1960–2020) annotated for 6 types of logical fallacies, including argument components (claims/premises) and their relations.",
-	// 	paper: "https://openreview.net/forum?id=Js80TDwMfY",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "https://github.com/pierpaologoffredo/ElecDeb60to20",
-	// 		description:
-	// 			"The ElecDeb60-20 dataset containing fallacy, argument component, and relationship annotations.",
-	// 	},
-	// 	code: {
-	// 		url: "https://github.com/pierpaologoffredo/FallacyDetection",
-	// 		description:
-	// 			"Source code for Multi-Fusion BERT models used for fallacy detection and classification.",
-	// 	},
-	// },
-	// {
-	// 	title: "Perspectrum",
-	// 	year: "2019",
-	// 	authors: ["Sihao Chen", "Daniel Khashabi", "Wenpeng Yin", "Chris Callison-Burch", "Dan Roth"],
-	// 	description:
-	// 		"Claims linked to diverse supporting/opposing perspectives and evidence paragraphs; stance‑aware perspective discovery dataset.",
-	// 	paper: "https://danielkhashabi.com/files/2019_perspectrum/2019_perspectrum_naacl.pdf",
-	// 	studyWebsite: "https://cogcomp.seas.upenn.edu/perspectrum/",
-	// 	dataset: {
-	// 		url: "https://github.com/CogComp/perspectrum",
-	// 		description: "Data, scripts, and demo for claims, perspectives, and evidence.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "PersuasiveToM",
-	// 	year: "2025",
-	// 	authors: ["Fangxu Yu", "Lai Jiang", "Shenyi Huang", "Zhen Wu", "Xinyu Dai"],
-	// 	description:
-	// 		"Benchmark assessing Theory of Mind in persuasive dialogues: tracking desires/beliefs/intentions and applying ToM to select/evaluate persuasion strategies.",
-	// 	paper: "https://arxiv.org/abs/2502.21017",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "https://github.com/Yu-Fangxu/PersuasiveToM",
-	// 		description: "Benchmark data and evaluation scripts.",
-	// 	},
-	// 	code: {
-	// 		url: "https://github.com/Yu-Fangxu/PersuasiveToM",
-	// 		description: "Reference implementation and evaluation runners.",
-	// 	},
-	// },
 	{
 		title: "Can Language Models Recognize Convincing Arguments?",
 		year: "2024",
@@ -490,6 +451,7 @@ const resources: ResourceItem[] = [
 		studyWebsite: "",
 		dataset: {
 			url: "https://zenodo.org/records/13887286",
+			name: "PoliProp / PoliIssues",
 			description:
 				"The dataset extends Durmus and Cardie's (2018) debate.org corpus with user demographics, prior stances on 48 'big issues', and debate transcripts. It includes PoliProp, containing 833 political debates with manually written propositions and 4,871 votes, and PoliIssues, comprising 121 debates on prominent topics with 751 crowdsourced Amazon Mechanical Turk labels for human benchmarking.",
 		},
@@ -497,136 +459,12 @@ const resources: ResourceItem[] = [
 			url: "https://github.com/manoelhortaribeiro/debate-gpt-x?tab=readme-ov-file",
 			description: "Code for data processing, analysi.",
 		},
+		personalisation: true,
+		strategy: false,
 	},
-	// {
-	// 	title: "TeleSalesCorpus",
-	// 	year: "2025",
-	// 	authors: ["—"],
-	// 	description:
-	// 		"Synthetic, multi‑turn, goal‑oriented sales dialogues (~2,000 conversations) for studying persuasive tactics in tele‑sales settings.",
-	// 	paper: null,
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: null,
-	// 		description:
-	// 			"Add your release link here; several synthetic sales corpora exist with similar specs.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "CToMPersu",
-	// 	year: "2025",
-	// 	authors: ["—"],
-	// 	description:
-	// 		"Multi‑domain persuasion scenarios explicitly annotated for information asymmetry and Theory‑of‑Mind variables.",
-	// 	paper: null,
-	// 	studyWebsite: null,
-	// 	dataset: { url: null, description: "Awaiting canonical link/publication." },
-	// 	code: null,
-	// },
-	// {
-	// 	title: "EPP4G & ETP4G (PersuasionForGood extensions)",
-	// 	year: "2020–2024",
-	// 	authors: ["—"],
-	// 	description:
-	// 		"Extended P4G annotations with emotion labels (EPP4G), politeness‑strategy labels, and empathetic transfer tags (ETP4G).",
-	// 	paper: null,
-	// 	studyWebsite: null,
-	// 	dataset: { url: null, description: "Add links to the extended annotated releases you use." },
-	// 	code: null,
-	// },
-	// {
-	// 	title: "ImageArg",
-	// 	year: "—",
-	// 	authors: ["—"],
-	// 	description:
-	// 		"A multi‑modal Twitter dataset targeting image persuasiveness in short social posts.",
-	// 	paper: null,
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: null,
-	// 		description:
-	// 			"Please provide the canonical link for ImageArg; several ‘image persuasion’ datasets exist under similar names.",
-	// 	},
-	// 	code: null,
-	// },
-	// {
-	// 	title: "3MT French (Persuasiveness Ratings)",
-	// 	year: "—",
-	// 	authors: ["—"],
-	// 	description:
-	// 		"Crowd evaluations of persuasiveness for 3‑minute academic presentations by French PhD students.",
-	// 	paper: null,
-	// 	studyWebsite: null,
-	// 	dataset: { url: null, description: "Awaiting authoritative dataset link/paper to finalize." },
-	// 	code: null,
-	// },
-	// {
-	// 	title:
-	// 		"Introducing the 3MT French dataset to investigate the timing of public speaking judgements",
-	// 	year: "2024",
-	// 	authors: ["Beatrice Biancardi", "Mathieu Chollet", "Chloé Clavel"],
-	// 	description:
-	// 		"Crowd-sourced persuasiveness evaluations of 3-minute presentations by French PhD students from the 'Ma Thèse en 180 secondes' competition, rated on a 5-point Likert scale.",
-	// 	paper: "https://link.springer.com/article/10.1007/s10579-023-09712-4",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "https://github.com/abarkar/PublicSpeakingAnalysisWithLLMs",
-	// 		description:
-	// 			"The original dataset contains video/audio evaluations. Barkar et al. provide generated text transcripts (via Whisper) and LLM-based feature extraction in their repository.",
-	// 	},
-	// 	code: "https://github.com/abarkar/PublicSpeakingAnalysisWithLLMs",
-	// },
-
-	// {
-	// 	title: "",
-	// 	year: "",
-	// 	authors: [],
-	// 	description: "",
-	// 	paper: "",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// 	code: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// },
-	// {
-	// 	title: "",
-	// 	year: "",
-	// 	authors: [],
-	// 	description: "",
-	// 	paper: "",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// 	code: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// },
-	// {
-	// 	title: "",
-	// 	year: "",
-	// 	authors: [],
-	// 	description: "",
-	// 	paper: "",
-	// 	studyWebsite: null,
-	// 	dataset: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// 	code: {
-	// 		url: "",
-	// 		description: "",
-	// 	},
-	// },
 ];
+
+resources.sort((a, b) => a.title.localeCompare(b.title));
 
 const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 ---
@@ -639,100 +477,151 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 		</p>
 	</div>
 
-	<!-- <section class="prose prose-sm prose-cactus mb-8 max-w-none">
-		<p>
-			Datasets, codebases, and research related to persuasion and behavior change in LLMs. Each
-			entry may include papers, datasets, code, or a combination. Use the badges below each entry to
-			jump to specific resources.
-		</p>
-	</section> -->
+	<div class="mb-4 flex flex-wrap items-center gap-2 text-xs">
+		<input
+			id="resource-search"
+			type="search"
+			placeholder="Search studies…"
+			class="border-accent/40 focus:border-accent mr-2 rounded border bg-transparent px-3 py-1.5 text-sm placeholder:opacity-40 focus:outline-none"
+		/>
+		<span class="opacity-50">Filter:</span>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="personalisation">Personalisation</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="strategy">Strategy</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="hasData">Has data</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="hasCode">Has code</button
+		>
+	</div>
 
-	<div class="space-y-8">
-		{
-			resources.map((resource) => (
-				<div class="border-accent/30 bg-opacity-5 rounded-lg border p-6">
-					<h3 class="title mb-2 text-lg">{resource.title}</h3>
-					{(resource.studyWebsite ||
-						resource.paper ||
-						resource.year ||
-						resource.authors.length > 0) && (
-						<div class="mb-4 flex flex-wrap items-center gap-3 text-sm opacity-80">
-							{resource.studyWebsite && (
-								<a
-									href={getResourceUrl(resource.studyWebsite)}
-									target="_blank"
-									rel="noreferrer"
-									class="border-accent/60 text-accent inline-block flex-shrink-0 rounded border px-3 py-1 text-xs font-semibold"
-								>
-									🔗 Website
-								</a>
-							)}
-							{resource.paper && (
-								<a
-									href={getResourceUrl(resource.paper)}
-									target="_blank"
-									rel="noreferrer"
-									class="border-accent/60 text-accent inline-block flex-shrink-0 rounded border px-3 py-1 text-xs font-semibold"
-								>
-									📄 {getResourceLabel(resource.paper, "Paper")}
-								</a>
-							)}
-							{(resource.year || resource.authors.length > 0) && (
-								<p>
+	<div class="overflow-x-auto">
+		<table id="resource-table" class="w-full border-collapse text-sm">
+			<thead>
+				<tr class="border-accent/30 border-b-2">
+					<th class="pr-6 pb-3 text-left font-semibold">Study</th>
+					<th
+						class="cursor-help pr-4 pb-3 text-center font-semibold whitespace-nowrap"
+						data-tooltip="Includes personalisation analysis"
+					>
+						Personalisation
+					</th>
+					<th
+						class="cursor-help pr-4 pb-3 text-center font-semibold whitespace-nowrap"
+						data-tooltip="Includes persuasion strategy/tactic analysis"
+					>
+						Strategy
+					</th>
+					<th class="pr-6 pb-3 text-left font-semibold whitespace-nowrap">Data</th>
+					<th class="pb-3 text-center font-semibold whitespace-nowrap">Code</th>
+				</tr>
+			</thead>
+			<tbody class="divide-accent/10 divide-y">
+				{
+					resources.map((resource) => (
+						<tr
+							class="hover:bg-accent/5 transition-colors"
+							data-personalisation={resource.personalisation ? "1" : "0"}
+							data-strategy={resource.strategy ? "1" : "0"}
+							data-has-data={
+								getResourceLinks(resource.dataset).some((dl) => !!getResourceHref(dl)) ? "1" : "0"
+							}
+							data-has-code={resource.code ? "1" : "0"}
+							data-search={`${resource.title} ${getShortAuthors(resource.authors)}`.toLowerCase()}
+						>
+							<td class="min-w-[220px] py-3 pr-6 align-top">
+								{resource.paper ? (
+									<a
+										href={getResourceUrl(resource.paper)}
+										target="_blank"
+										rel="noreferrer"
+										class="leading-snug font-medium hover:underline"
+									>
+										{resource.title}
+									</a>
+								) : (
+									<p class="leading-snug font-medium">{resource.title}</p>
+								)}
+								<p class="mt-0.5 text-xs opacity-50">
 									{resource.year}
-									{resource.year && resource.authors.length > 0 && " • "}
+									{resource.year && resource.authors.length > 0 && " · "}
 									{getShortAuthors(resource.authors)}
 								</p>
-							)}
-						</div>
-					)}
-					<p class="mb-4 text-sm">{resource.description}</p>
-					<div class="space-y-3">
-						{getResourceLinks(resource.dataset).map((datasetLink) => {
-							const datasetHref = getResourceHref(datasetLink);
-
-							return (
-								<div class="flex items-start gap-3">
-									{datasetHref ? (
+							</td>
+							<td class="py-3 pr-4 text-center align-top">
+								{resource.personalisation ? (
+									<span class="text-accent font-bold">✓</span>
+								) : (
+									<span class="opacity-20">—</span>
+								)}
+							</td>
+							<td class="py-3 pr-4 text-center align-top">
+								{resource.strategy ? (
+									<span class="text-accent font-bold">✓</span>
+								) : (
+									<span class="opacity-20">—</span>
+								)}
+							</td>
+							<td class="py-3 pr-6 align-top">
+								<div class="flex flex-col gap-1">
+									{getResourceLinks(resource.dataset).map((dl) => {
+										const href = getResourceHref(dl);
+										const name = getDatasetName(dl);
+										return href ? (
+											<a
+												href={href}
+												target="_blank"
+												rel="noreferrer"
+												class="text-accent text-xs whitespace-nowrap hover:underline"
+												title={getResourceDescription(dl, name)}
+											>
+												{name}
+											</a>
+										) : (
+											<span class="text-xs whitespace-nowrap opacity-40">{name}</span>
+										);
+									})}
+								</div>
+							</td>
+							<td class="py-3 text-center align-top">
+								<div class="flex flex-col items-center gap-1">
+									{resource.studyWebsite && (
 										<a
-											href={datasetHref}
+											href={getResourceUrl(resource.studyWebsite)}
 											target="_blank"
 											rel="noreferrer"
-											class="bg-accent mt-0.5 inline-flex w-28 flex-shrink-0 justify-center rounded px-3 py-1 text-xs font-semibold text-white dark:text-black"
+											class="text-accent hover:opacity-70"
+											title="Study website"
 										>
-											📊 Dataset
+											🔗
 										</a>
-									) : (
-										<span class="bg-accent mt-0.5 inline-flex w-28 flex-shrink-0 justify-center rounded px-3 py-1 text-xs font-semibold text-white opacity-70 dark:text-black">
-											📊 Dataset
-										</span>
 									)}
-									<p
-										class="text-sm"
-										set:html={getResourceDescription(datasetLink, "Link to the dataset.")}
-									/>
+									{resource.code && (
+										<a
+											href={getResourceUrl(resource.code)}
+											target="_blank"
+											rel="noreferrer"
+											class="text-accent hover:opacity-70"
+											title={getResourceDescription(resource.code, "Code")}
+										>
+											💻
+										</a>
+									)}
 								</div>
-							);
-						})}
-						{resource.code && (
-							<div class="flex items-start gap-3">
-								<a
-									href={getResourceUrl(resource.code)}
-									target="_blank"
-									rel="noreferrer"
-									class="bg-accent mt-0.5 inline-flex w-28 flex-shrink-0 justify-center rounded px-3 py-1 text-xs font-semibold text-white dark:text-black"
-								>
-									💻 Code
-								</a>
-								<p class="text-sm">
-									{getResourceDescription(resource.code, "Link to the code repository.")}
-								</p>
-							</div>
-						)}
-					</div>
-				</div>
-			))
-		}
+							</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
 	</div>
 
 	<section class="prose prose-sm prose-cactus mt-12 max-w-none">
@@ -755,4 +644,71 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 			</ul>
 		</p>
 	</section>
+
+	<style>
+		.filter-btn.is-active {
+			background-color: var(--color-accent);
+			border-color: var(--color-accent);
+			color: var(--color-global-bg);
+		}
+	</style>
+
+	<script>
+		// --- filters ---
+		const search = document.getElementById("resource-search") as HTMLInputElement;
+		const btns = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+		const rows = document.querySelectorAll<HTMLTableRowElement>("#resource-table tbody tr");
+		const active = new Set<string>();
+
+		function applyFilters() {
+			const q = search.value.toLowerCase().trim();
+			rows.forEach((row) => {
+				const d = row.dataset;
+				const show =
+					(!q || (d.search ?? "").includes(q)) &&
+					(!active.has("personalisation") || d.personalisation === "1") &&
+					(!active.has("strategy") || d.strategy === "1") &&
+					(!active.has("hasData") || d.hasData === "1") &&
+					(!active.has("hasCode") || d.hasCode === "1");
+				row.style.display = show ? "" : "none";
+			});
+		}
+
+		btns.forEach((btn) => {
+			btn.addEventListener("click", () => {
+				const key = btn.dataset.filter!;
+				if (active.has(key)) {
+					active.delete(key);
+					btn.classList.remove("is-active");
+				} else {
+					active.add(key);
+					btn.classList.add("is-active");
+				}
+				applyFilters();
+			});
+		});
+
+		search.addEventListener("input", applyFilters);
+
+		// --- column header tooltips ---
+		const tip = document.createElement("div");
+		tip.style.cssText =
+			"position:fixed;z-index:50;max-width:14rem;padding:0.375rem 0.5rem;border-radius:0.25rem;font-size:0.75rem;line-height:1.4;pointer-events:none;display:none;background-color:var(--color-global-text);color:var(--color-global-bg);box-shadow:0 4px 6px -1px rgb(0 0 0/0.2)";
+		document.body.appendChild(tip);
+
+		document.querySelectorAll<HTMLElement>("th[data-tooltip]").forEach((th) => {
+			th.addEventListener("mouseenter", () => {
+				tip.textContent = th.dataset.tooltip!;
+				tip.style.display = "block";
+			});
+			th.addEventListener("mousemove", (e) => {
+				tip.style.top = e.clientY + 16 + "px";
+				tip.style.left = e.clientX + "px";
+				tip.style.transform = "translateX(-50%)";
+			});
+			th.addEventListener("mouseleave", () => {
+				tip.style.display = "none";
+			});
+		});
+	</script>
 </PageLayout>
