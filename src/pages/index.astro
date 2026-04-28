@@ -12,35 +12,32 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 	<h1 class="title mb-8">Welcome</h1>
 	<div class="prose prose-sm prose-cactus max-w-none">
 		<p>
-			<strong>LLM Persuasion Safety Hub</strong> is a collection of datasets and codebases used to study
-			and evaluate persuasion in large language models (LLMs). The goal is to bring together the most
-			relevant resources as they emerge, making safety-relevant LLM persuasion research easier to discover,
-			compare, and reproduce.
+			<strong>LLM Persuasion Safety Hub</strong> is a curated collection of datasets, benchmarks, and
+			automated evaluation tools for studying persuasive capabilities in large language models (LLMs).
+			The goal is to bring together the most relevant resources as they emerge, helping researchers navigate
+			this rapidly evolving field.
 			<br />
 			<br />
-			This initiative grew out of work on a survey of automatic persuasion evaluation methods:
-			<i
-				>Measuring Machine Persuasion: A Survey of Automated Evaluation Methods for Large Language
-				Models</i
-			>
-			(work in progress), poster to be presented at the first <a
+			This hub was developed alongside a survey paper presented at the <a
 				target="_blank"
 				href="https://aimii.info/">AIMII workshop</a
-			> at
-			<a target="_blank" href="https://www.iaseai.org/our-programs/iaseai26">IASEAI'26</a>.
+			> (non-archival) at <a target="_blank" href="https://www.iaseai.org/our-programs/iaseai26"
+				>IASEAI'26</a
+			> as <i
+				>Measuring Machine Persuasion: A Survey of Automated Evaluation Methods for Large Language
+				Models</i
+			> (currently under review under a different title).
 		</p>
 		<h3>What is included</h3>
 		<ul class="list-inside list-disc">
 			<li>
-				<strong>Research papers</strong> — that provide either a dataset, open source code or both.
+				<strong>Research papers</strong> — empirical studies with associated datasets, code, or both
 			</li>
 			<li>
-				<strong>Datasets</strong> — link & a short description of the dataset used in the mentioned research
-				paper.
+				<strong>Datasets</strong> — corpora and benchmarks used to evaluate LLM persuasion
 			</li>
 			<li>
-				<strong>Codebases</strong> — link & a short description of the codebase used in the mentioned
-				research paper.
+				<strong>Codebases</strong> — evaluation frameworks and tools
 			</li>
 		</ul>
 		<h3>How to contribute</h3>
