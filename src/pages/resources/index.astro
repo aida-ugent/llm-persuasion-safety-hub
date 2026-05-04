@@ -43,9 +43,6 @@ type ResourceItem = {
 
 const getResourceUrl = (link: LinkWithUrl) => (typeof link === "string" ? link : link.url);
 
-const getResourceDescription = (link: ResourceLink | DatasetLink, fallback: string) =>
-	typeof link === "string" ? fallback : link.description;
-
 const getResourceHref = (link: DatasetLink) => (typeof link === "string" ? link : link.url);
 
 const getDatasetName = (link: DatasetLink) => (typeof link === "string" ? "Dataset" : link.name);
@@ -77,19 +74,17 @@ const resources: ResourceItem[] = [
 			"Ruihua Song",
 			"Huan Chen",
 		],
-		description:
-			"Introduces DailyPersuasion, a large-scale multi-domain persuasive dialogue dataset, and PersuGPT, a model specialized in persuasion strategies.",
+		description: "",
 		paper: "https://aclanthology.org/2024.acl-long.92/",
 		studyWebsite: "https://persugpt.github.io",
 		dataset: {
 			url: "https://github.com/PersuGPT/PersuGPT.github.io/blob/main/DailyPersuasion_full_version.zip",
 			name: "DailyPersuasion",
-			description:
-				"DailyPersuasion: A dataset covering 13,000 dialogue scenarios across 35 distinct domains.",
+			description: "",
 		},
 		code: {
 			url: "https://persugpt.github.io",
-			description: "Code for the PersuGPT model and data collection framework.",
+			description: "",
 		},
 		personalisation: false,
 		strategy: true,
@@ -99,19 +94,17 @@ const resources: ResourceItem[] = [
 			"Measuring and Benchmarking Large Language Models’ Capabilities to Generate Persuasive Language",
 		year: "2024",
 		authors: ["Amalie Brogaard Pauli", "Isabelle Augenstein", "Ira Assent"],
-		description: "A study of LLM ability to produce persuasive text.",
+		description: "",
 		paper: "https://arxiv.org/abs/2406.17753",
 		studyWebsite: null,
 		dataset: {
 			url: "https://huggingface.co/datasets/APauli/Persuasive-Pairs",
 			name: "Persuasive-Pairs",
-			description:
-				"<strong>Persuasive-Pairs</strong>: 2,700 text pairs from news, debates, and chats. Each includes an LLM-rewritten version with varying persuasiveness, validated by three human annotators.",
+			description: "",
 		},
 		code: {
 			url: "https://huggingface.co/APauli/Persuasive_language_in_pairs",
-			description:
-				"A trained regression model model to evaluate the relative persuasiveness between two text samples.",
+			description: "",
 		},
 		personalisation: false,
 		strategy: false,
@@ -126,11 +119,10 @@ const resources: ResourceItem[] = [
 		dataset: null,
 		code: {
 			url: "https://github.com/openai/evals/tree/main/evals/elsuite/make_me_say",
-			description:
-				"This evaluation tests a model’s ability to generate persuasive or manipulative text, specifically in the setting of a game where one AI system has to get the other party (an AI system simulating a human) to say a specific codeword without arousing suspicion.",
+			description: "",
 		},
 		personalisation: false,
-		strategy: true,
+		strategy: false,
 	},
 	{
 		title: "MakeMePay, OpenAI o3-mini System Card",
@@ -142,11 +134,10 @@ const resources: ResourceItem[] = [
 		dataset: null,
 		code: {
 			url: "https://github.com/openai/evals/tree/main/evals/elsuite/make_me_pay",
-			description:
-				"This evaluation tests an AI system’s ability to generate persuasive or manipulative text, specifically in the setting of convincing another (simulated) entity to part with money.",
+			description: "",
 		},
 		personalisation: false,
-		strategy: true,
+		strategy: false,
 	},
 	{
 		title: "Among Them: A Game-Based Framework for Assessing Persuasion Capabilities of LLMs",
@@ -160,20 +151,17 @@ const resources: ResourceItem[] = [
 			"Iwo Błądek",
 			"Dariusz Brzezinski",
 		],
-		description:
-			"An evaluation framework using social deduction gameplay to measure how LLMs use persuasion and deception in dynamic environments.",
+		description: "",
 		paper: "https://arxiv.org/abs/2502.20426",
 		studyWebsite: null,
 		dataset: {
 			url: "https://doi.org/10.5281/zenodo.14935395",
 			name: "Game logs",
-			description:
-				"Logs and transcripts from simulated social deduction games used to analyze model behavior.",
+			description: "",
 		},
 		code: {
 			url: "https://github.com/Farmerobot/among_them",
-			description:
-				"A simulation platform inspired by ‘Among Us’ for testing persuasive and deceptive capabilities in LLMs.",
+			description: "",
 		},
 		personalisation: false,
 		strategy: true,
@@ -183,36 +171,32 @@ const resources: ResourceItem[] = [
 			"Persuade Me if You Can: A Framework for Evaluating Persuasion Effectiveness and Susceptibility Among Large Language Models",
 		year: "2025",
 		authors: ["Nimet Beyza Bozdag", "Shuhaib Mehri", "Gokhan Tur", "Dilek Hakkani-Tür"],
-		description:
-			"The PMIYC framework evaluates LLMs in multi-turn conversations to measure both their effectiveness as persuaders and susceptibility as persuadees.",
+		description: "",
 		paper: "https://arxiv.org/abs/2503.01829",
 		studyWebsite: "https://beyzabozdag.github.io/PMIYC",
 		dataset: {
 			url: "https://github.com/beyzabozdag/PersuadeMeIfYouCan/tree/main/data",
-			name: "PMIYC benchmark",
-			description:
-				"Benchmark data used to measure shifts in model and user opinions across controversial topics. The dataset comprises 961 subjective claims spanning political, ethical, and social issues sourced from Durmus et al. and the Perspectrum dataset, alongside 817 factual misinformation question-answer pairs adapted from the TruthfulQA benchmark.",
+			name: "Dataset",
+			description: "",
 		},
 		code: {
 			url: "https://github.com/beyzabozdag/PersuadeMeIfYouCan",
-			description: "Code for the multi-agent simulation framework.",
+			description: "",
 		},
 		personalisation: false,
-		strategy: true,
+		strategy: false,
 	},
 	{
 		title: "Measuring and Improving Persuasiveness of Large Language Models",
 		year: "2024",
 		authors: ["Somesh Singh", "Yaman K Singla", "Harini SI", "Balaji Krishnamurthy"],
-		description:
-			"Introduces PersuasionBench and PersuasionArena to evaluate LLM generative and simulative persuasion capabilities, including the task of ‘transsuasion’.",
+		description: "",
 		paper: "https://arxiv.org/abs/2410.02653",
 		studyWebsite: "https://behavior-in-the-wild.github.io/measure-persuasion",
 		dataset: {
 			url: "https://huggingface.co/datasets/behavior-in-the-wild/PersuasionArena",
-			name: "PersuasionArena",
-			description:
-				"The PersuasionArena dataset for evaluating LLM persuasion across different tasks consists of tweet pairs where two tweets from the same account have similar content and were posted in close temporal proximity, but received significantly different engagement (e.g., number of likes). These differences act as a proxy for persuasiveness, allowing models to be trained and evaluated on generating or ranking more persuasive content.",
+			name: "Dataset",
+			description: "",
 		},
 		code: null,
 		personalisation: false,
@@ -223,15 +207,13 @@ const resources: ResourceItem[] = [
 			"It’s the Thought that Counts: Evaluating the Attempts of Frontier LLMs to Persuade on Harmful Topics",
 		year: "2025",
 		authors: ["Matthew Kowal", "Jasper Timm", "Jean-Francois Godbout", "others"],
-		description:
-			"The APE benchmark evaluates the propensity (willingness) of LLMs to attempt persuasion on harmful topics like conspiracies and violence.",
+		description: "",
 		paper: "https://arxiv.org/abs/2506.02873",
 		studyWebsite: null,
 		dataset: null,
 		code: {
 			url: "https://github.com/AlignmentResearch/AttemptPersuadeEval",
-			description:
-				"APE framework for measuring persuasion attempts. Includes topics, prompts and code for generating a synthetic dataset.",
+			description: "",
 		},
 		personalisation: false,
 		strategy: false,
@@ -240,17 +222,15 @@ const resources: ResourceItem[] = [
 		title: "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
 		year: "2025",
 		authors: ["Kunlun Zhu", "Hongyi Du", "Zhaochen Hong", "others"],
-		description:
-			"Benchmarks multi-agent coordination and competition across scenarios like coding, research, and games (persuasion related tasks: Werewolf, Bargaining).",
+		description: "",
 		paper: "https://arxiv.org/abs/2503.01935",
 		studyWebsite: null,
 		dataset: null,
 		code: {
 			url: "https://github.com/MultiagentBench/MARBLE",
-			description:
-				"The MARBLE framework for multi-agent collaboration and competition evaluation. ",
+			description: "",
 		},
-		personalisation: false,
+		personalisation: true,
 		strategy: true,
 	},
 
@@ -258,14 +238,13 @@ const resources: ResourceItem[] = [
 		title: "Werewolf Arena: A Case Study in LLM Evaluation via Social Deduction",
 		year: "2024",
 		authors: ["Suma Bailis", "Jane Friedhoff", "Feiyang Chen"],
-		description:
-			"A framework for evaluating LLMs via the social deduction game Werewolf, focusing on persuasion, deception, deduction.",
+		description: "",
 		paper: "https://arxiv.org/abs/2407.13943",
 		studyWebsite: null,
 		dataset: null,
 		code: {
 			url: "https://github.com/google/werewolf_arena",
-			description: "Code and prompt templates for the Werewolf Arena simulation framework.",
+			description: "",
 		},
 		personalisation: false,
 		strategy: true,
@@ -281,8 +260,7 @@ const resources: ResourceItem[] = [
 			"Jack Clark",
 			"Deep Ganguli",
 		],
-		description:
-			"An Anthropic study measuring human belief shifts on various topics after reading arguments generated by Claude models.",
+		description: "",
 		paper: {
 			url: "https://www.anthropic.com/news/measuring-model-persuasiveness",
 			label: "Blog post",
@@ -290,9 +268,8 @@ const resources: ResourceItem[] = [
 		studyWebsite: null,
 		dataset: {
 			url: "https://huggingface.co/datasets/Anthropic/persuasion",
-			name: "Persuasion dataset",
-			description:
-				"The Persuasion Dataset contains claims and corresponding human-written and model-generated arguments, along with persuasiveness scores.",
+			name: "Dataset",
+			description: "",
 		},
 		code: null,
 		personalisation: false,
@@ -311,68 +288,105 @@ const resources: ResourceItem[] = [
 			"Jingwen Zhang",
 			"Zhou Yu",
 		],
-		description:
-			"Crowdsourced persuasion dialogues where a persuader aims to convince a partner to donate to Save the Children; 1,017 conversations (300 with sentence‑level persuasion‑act annotations).",
+		description: "",
 		paper: "https://arxiv.org/abs/1906.06725",
 		studyWebsite: "",
 		dataset: {
-			url: "https://github.com/ohyj1002/persuasionforgood/tree/master/data",
+			url: "https://gitlab.com/ucdavisnlp/persuasionforgood",
 			name: "PersuasionForGood",
-			description:
-				"PersuasionForGood (P4G) dataset with AnnotatedData (300) and FullData (1,017) dialogues.",
+			description: "",
 		},
 		code: {
-			url: "https://github.com/ohyj1002/persuasionforgood",
+			url: "https://gitlab.com/ucdavisnlp/persuasionforgood",
 			description: "", //code for classifier model?
 		},
 		personalisation: true,
 		strategy: true,
+	},
+	// {
+	// 	title:
+	// 		"What makes a convincing argument? Empirical analysis and detecting attributes of convincingness in Web argumentation",
+	// 	year: "2016",
+	// 	authors: ["Ivan Habernal", "Iryna Gurevych"],
+	// 	description: "",
+	// 	paper: "https://aclanthology.org/D16-1129/",
+	// 	studyWebsite: null,
+	// 	dataset: [
+	// 		{
+	// 			url: "https://github.com/UKPLab/acl2016-convincing-arguments/tree/master/data",
+	// 			name: "UKPConvArg1",
+	// 			description: "",
+	// 		},
+	// 		{
+	// 			url: "https://tudatalib.ulb.tu-darmstadt.de/items/4198f487-1b64-463b-a0ae-a678121f391f",
+	// 			name: "UKPConvArg2",
+	// 			description: "",
+	// 		},
+	// 	],
+	// 	code: {
+	// 		url: "https://github.com/UKPLab/emnlp2016-empirical-convincingness",
+	// 		description: "",
+	// 	},
+	// 	personalisation: false,
+	// 	strategy: true,
+	// },
+
+	{
+		title:
+			"Which argument is more convincing? Analyzing and predicting convincingness of Web arguments using bidirectional LSTM",
+		year: "2016",
+		authors: ["Ivan Habernal", "Iryna Gurevych"],
+		description: "",
+		paper: "https://aclanthology.org/P16-1150/",
+		studyWebsite: null,
+		dataset: [
+			{
+				url: "https://github.com/UKPLab/acl2016-convincing-arguments/tree/master/data",
+				name: "UKPConvArg1",
+				description: "",
+			},
+		],
+		code: {
+			url: "https://github.com/UKPLab/acl2016-convincing-arguments",
+			description: "Bidirectional LSTM model for predicting argument convincingness.",
+		},
+		personalisation: false,
+		strategy: false,
 	},
 	{
 		title:
 			"What makes a convincing argument? Empirical analysis and detecting attributes of convincingness in Web argumentation",
 		year: "2016",
 		authors: ["Ivan Habernal", "Iryna Gurevych"],
-		description:
-			"A comprehensive study shift from normative logic to empirical ‘convincingness.’ It provides 26k natural language explanations for why one argument is better than another, identifying 17 qualitative dimensions like ‘no credible evidence,’ ‘off-topic,’ or ‘well-thought-of.’",
+		description: "",
 		paper: "https://aclanthology.org/D16-1129/",
 		studyWebsite: null,
 		dataset: [
 			{
-				url: "https://github.com/UKPLab/acl2016-convincing-arguments/tree/master/data",
-				name: "UKPConvArg1",
-				description:
-					"UKPConvArg1: 16k argument pairs with pairwise labels and a ranking-based version (UKPConvArgRank) for 1k arguments.",
-			},
-			{
 				url: "https://tudatalib.ulb.tu-darmstadt.de/items/4198f487-1b64-463b-a0ae-a678121f391f",
 				name: "UKPConvArg2",
-				description:
-					"UKPConvArg2: 9k argument pairs annotated with 17 specific reasons/flaws explaining the convincingness of each choice.",
+				description: "",
 			},
 		],
 		code: {
 			url: "https://github.com/UKPLab/emnlp2016-empirical-convincingness",
-			description:
-				"Source code for SVM and Bi-LSTM models used to predict qualitative properties and label distributions.",
+			description: "SVM and Bidirectional LSTM models for predicting argument quality attributes.",
 		},
 		personalisation: false,
-		strategy: true,
+		strategy: false,
 	},
 
 	{
-		title: "Automatic Argument Quality Assessment - New Datasets and Methods",
-		year: "2019",
-		authors: ["Assaf Toledo", "Shai Gretz", "Edo Cohen‑Karlik", "others"],
-		description:
-			"Actively collected 6.3k individual arguments with quality labels and 14k argument pairs with pairwise convincingness judgments, released by IBM Project Debater.",
-		paper: "https://arxiv.org/pdf/1909.01007.pdf",
+		title: "A Large-scale Dataset for Argument Quality Ranking: Construction and Analysis",
+		year: "2020",
+		authors: ["Shai Gretz", "others"],
+		description: "",
+		paper: "https://arxiv.org/pdf/1911.11408.pdf",
 		studyWebsite: null,
 		dataset: {
 			url: "https://huggingface.co/datasets/ibm-research/argument_quality_ranking_30k",
 			name: "IBM-ArgQ",
-			description:
-				"IBM-ArgQ (6.3kArgs & 14kPairs). IBM argument quality ranking dataset (related release) with ~30k items.",
+			description: "",
 		},
 		code: null,
 		personalisation: false,
@@ -383,81 +397,53 @@ const resources: ResourceItem[] = [
 			"Winning Arguments: Interaction Dynamics and Persuasion Strategies in Good-faith Online Discussions",
 		year: "2016",
 		authors: ["Chenhao Tan", "Vlad Niculae", "Cristian Danescu-Niculescu-Mizil", "Lillian Lee"],
-		description:
-			"Conversations scraped from the r/ChangeMyView subreddit tracking good-faith discussions and subsequent user opinion changes (indicated by awarding a Δ). It includes paired successful (persuasive) vs. matched unsuccessful (non-persuasive) threads.",
+		description: "",
 		paper: "https://arxiv.org/abs/1602.01103",
-		studyWebsite: null,
+		studyWebsite: "https://chenhaot.com/papers/changemyview/",
 		dataset: {
-			url: "https://chenhaot.com/data/cmv/README.txt",
-			name: "ChangeMyView (CMV)",
-			description:
-				"Original CMV data and paired argument threads (training/held‑out) annotated for persuasiveness based on user deltas.",
+			url: "https://drive.google.com/file/d/1ITLA8CU8IZgG1P2RHmXksGRuGoteYXC2/view",
+			name: "Winning Arguments",
+			description: "",
 		},
 		code: null,
 		personalisation: false,
-		strategy: true,
+		strategy: false,
 	},
 	{
-		title: "Webis-Clickbait-17",
-		year: "2017",
-		authors: [
-			"Martin Potthast",
-			"Tim Gollub",
-			"Matti Wiegmann",
-			"Benno Stein",
-			"Matthias Hagen",
-			"others",
-		],
-		description:
-			"38,517 Twitter teaser posts from 27 US news publishers with 4‑point clickbait strength annotations; often used as a proxy for manipulative teaser design.",
-		paper: "https://aclanthology.org/C18-1127/",
-		studyWebsite: "https://webis.de/data/webis-clickbait-17.html",
-		dataset: {
-			url: "https://explore.openaire.eu/search/dataset?pid=10.5281%2Fzenodo.3346490",
-			name: "Webis-Clickbait-17",
-			description: "Zenodo DOIs for training/test partitions via the Clickbait Challenge 2017.",
-		},
-		code: null,
-		personalisation: false,
-		strategy: true,
-	},
-	{
-		title: "PersuasiveToM",
+		title:
+			"PersuasiveToM: A Benchmark for Evaluating Machine Theory of Mind in Persuasive Dialogues",
 		year: "2025",
 		authors: ["Fangxu Yu", "Lai Jiang", "Shenyi Huang", "Zhen Wu", "Xinyu Dai"],
-		description:
-			"Benchmark assessing Theory of Mind in persuasive dialogues: tracking desires/beliefs/intentions and applying ToM to select/evaluate persuasion strategies.",
+		description: "",
 		paper: "https://arxiv.org/abs/2502.21017",
 		studyWebsite: null,
 		dataset: {
 			url: "https://github.com/Yu-Fangxu/PersuasiveToM",
-			name: "PersuasiveToM",
-			description: "Benchmark data and evaluation scripts.",
+			name: "Dataset",
+			description: "",
 		},
 		code: {
 			url: "https://github.com/Yu-Fangxu/PersuasiveToM",
-			description: "Reference implementation and evaluation runners.",
+			description: "",
 		},
-		personalisation: true,
+		personalisation: false,
 		strategy: true,
 	},
 	{
 		title: "Can Language Models Recognize Convincing Arguments?",
 		year: "2024",
 		authors: ["Paula Dolores Rescala", "Manoel Horta Ribeiro", "Tiancheng Hu", "Robert West"],
-		description:
-			"This paper investigates whether large language models (LLMs) can detect convincing arguments and predict user stances based on demographic and belief profiles. ",
+		description: "",
 		paper: "https://arxiv.org/abs/2404.00750",
 		studyWebsite: "",
 		dataset: {
 			url: "https://zenodo.org/records/13887286",
-			name: "PoliProp / PoliIssues",
-			description:
-				"The dataset extends Durmus and Cardie's (2018) debate.org corpus with user demographics, prior stances on 48 'big issues', and debate transcripts. It includes PoliProp, containing 833 political debates with manually written propositions and 4,871 votes, and PoliIssues, comprising 121 debates on prominent topics with 751 crowdsourced Amazon Mechanical Turk labels for human benchmarking.",
+			name: "Dataset",
+			description: "",
 		},
 		code: {
 			url: "https://github.com/manoelhortaribeiro/debate-gpt-x?tab=readme-ov-file",
-			description: "Code for data processing, analysi.",
+			description: "",
 		},
 		personalisation: true,
 		strategy: false,
@@ -581,7 +567,6 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 												target="_blank"
 												rel="noreferrer"
 												class="text-accent text-xs whitespace-nowrap hover:underline"
-												title={getResourceDescription(dl, name)}
 											>
 												{name}
 											</a>
@@ -610,7 +595,6 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 											target="_blank"
 											rel="noreferrer"
 											class="text-accent hover:opacity-70"
-											title={getResourceDescription(resource.code, "Code")}
 										>
 											💻
 										</a>
