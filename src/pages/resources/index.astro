@@ -39,6 +39,16 @@ type ResourceItem = {
 	code: ResourceLink | null;
 	personalisation: boolean;
 	strategy: boolean;
+	taxonomy: string | null;
+};
+
+const taxonomyLabels: Record<string, string[]> = {
+	"prompt":          ["Dataset-based", "Prompt-based"],
+	"supervised":      ["Dataset-based", "Supervised"],
+	"dialogue-single": ["Simulation", "Dialogue", "Single-turn"],
+	"dialogue-multi":  ["Simulation", "Dialogue", "Multi-turn"],
+	"dialogue-mixed":  ["Simulation", "Dialogue", "Mixed"],
+	"game":            ["Simulation", "Game"],
 };
 
 const getResourceUrl = (link: LinkWithUrl) => (typeof link === "string" ? link : link.url);
@@ -88,6 +98,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: true,
+		taxonomy: "prompt",
 	},
 	{
 		title:
@@ -108,6 +119,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: "supervised",
 	},
 	{
 		title: "MakeMeSay, OpenAI o3-mini System Card",
@@ -123,6 +135,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: "dialogue-multi",
 	},
 	{
 		title: "MakeMePay, OpenAI o3-mini System Card",
@@ -138,6 +151,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: "dialogue-multi",
 	},
 	{
 		title: "Among Them: A Game-Based Framework for Assessing Persuasion Capabilities of LLMs",
@@ -165,6 +179,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: true,
+		taxonomy: "game",
 	},
 	{
 		title:
@@ -185,6 +200,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: "dialogue-mixed",
 	},
 	{
 		title: "Measuring and Improving Persuasiveness of Large Language Models",
@@ -201,6 +217,7 @@ const resources: ResourceItem[] = [
 		code: null,
 		personalisation: false,
 		strategy: false,
+		taxonomy: "prompt",
 	},
 	{
 		title:
@@ -217,6 +234,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: null,
 	},
 	{
 		title: "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
@@ -232,6 +250,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: true,
 		strategy: true,
+		taxonomy: "game",
 	},
 
 	{
@@ -248,6 +267,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: true,
+		taxonomy: "game",
 	},
 	{
 		title: "Measuring the Persuasiveness of Language Models",
@@ -274,6 +294,7 @@ const resources: ResourceItem[] = [
 		code: null,
 		personalisation: false,
 		strategy: false,
+		taxonomy: "dialogue-single",
 	},
 
 	{
@@ -302,6 +323,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: true,
 		strategy: true,
+		taxonomy: null,
 	},
 	// {
 	// 	title:
@@ -352,6 +374,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: null,
 	},
 	{
 		title:
@@ -374,6 +397,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: false,
+		taxonomy: null,
 	},
 
 	{
@@ -391,6 +415,7 @@ const resources: ResourceItem[] = [
 		code: null,
 		personalisation: false,
 		strategy: false,
+		taxonomy: null,
 	},
 	{
 		title:
@@ -408,6 +433,7 @@ const resources: ResourceItem[] = [
 		code: null,
 		personalisation: false,
 		strategy: false,
+		taxonomy: null,
 	},
 	{
 		title:
@@ -428,6 +454,7 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: false,
 		strategy: true,
+		taxonomy: null,
 	},
 	{
 		title: "Can Language Models Recognize Convincing Arguments?",
@@ -447,6 +474,259 @@ const resources: ResourceItem[] = [
 		},
 		personalisation: true,
 		strategy: false,
+		taxonomy: null,
+	},
+	// {
+	// 	title: "Make an Offer They Can't Refuse: Grounding Bayesian Persuasion in Real-World Dialogues Without Pre-Commitment",
+	// 	year: "2025",
+	// 	authors: ["Bo He", "Yu Liu", "Zhenghao Zhang"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2510.13387",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: false,
+	// 	strategy: true,
+	// },
+	// {
+	// 	title: "The Persuasive Power of Large Language Models",
+	// 	year: "2024",
+	// 	authors: [
+	// 		"Silas Mathias Breum",
+	// 		"Daniel Valentin Egdal",
+	// 		"Victor Gram Mortensen",
+	// 		"Andreas Martiny Johansen",
+	// 	],
+	// 	description: "",
+	// 	paper: "https://ojs.aaai.org/index.php/ICWSM/article/view/31304",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: false,
+	// 	strategy: true,
+	// },
+	{
+		title: "On the Adaptive Psychological Persuasion of Large Language Models",
+		year: "2025",
+		authors: ["Tingyu Ju", "Yun Chen", "Haoning Fei"],
+		description: "",
+		paper: "https://arxiv.org/abs/2506.06800",
+		studyWebsite: null,
+		dataset: null,
+		code: "https://github.com/KalinaEine/PsychologicalPersuasion",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "dialogue-single",
+	},
+	// {
+	// 	title: "Leveraging Language Models and Bandit Algorithms to Drive Adoption of Battery-Electric Vehicles",
+	// 	year: "2024",
+	// 	authors: ["Kengo Namikoshi", "David A. Shamma", "Rumen Iliev"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2410.23371",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: true,
+	// 	strategy: false,
+	// },
+	// {
+	// 	title: "Towards Strategic Persuasion with Language Models",
+	// 	year: "2025",
+	// 	authors: ["Zhenghan Cheng", "Junjue You"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2509.22989",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: false,
+	// 	strategy: true,
+	// },
+	// {
+	// 	title:
+	// 		"AI Persuading AI vs AI Persuading Humans: LLMs' Differential Effectiveness in Promoting Pro-Environmental Behavior",
+	// 	year: "2025",
+	// 	authors: ["Aleksei Doudkin", "Pat Pataranutaporn", "Pattie Maes"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2503.02067",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: true,
+	// 	strategy: true,
+	// },
+	// {
+	// 	title: "Persuasion Games Using Large Language Models",
+	// 	year: "2024",
+	// 	authors: ["Ganesh Prasad Ramani", "Shrirang Karande"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2408.15879",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: false,
+	// 	strategy: false,
+	// },
+	{
+		title:
+			"Towards Personalized Conversational Sales Agents: Contextual User Profiling for Strategic Action",
+		year: "2025",
+		authors: ["Taegwan Kim", "Jungmo Lee", "Seungsoo Yoon"],
+		description: "",
+		paper: "https://aclanthology.org/2025.findings-emnlp.275/",
+		studyWebsite: null,
+		dataset: null,
+		code: "https://github.com/kimtongyoung/CSI",
+		personalisation: true,
+		strategy: true,
+		taxonomy: "dialogue-multi",
+	},
+	{
+		title:
+			"LLM Can Be a Dangerous Persuader: Empirical Study of Persuasion Safety in Large Language Models",
+		year: "2025",
+		authors: ["Mingan Liu", "Zhiheng Xu", "Xinying Zhang"],
+		description: "",
+		paper: null,
+		studyWebsite: null,
+		dataset: {
+			url: "https://github.com/PLUM-Lab/PersuSafety/tree/main/dataset",
+			name: "PersuSafety",
+			description: "",
+		},
+		code: "https://github.com/PLUM-Lab/PersuSafety",
+		personalisation: true,
+		strategy: true,
+		taxonomy: "dialogue-multi",
+	},
+	// {
+	// 	title:
+	// 		"ChatThero: An LLM-Supported Chatbot for Behavior Change and Therapeutic Support in Addiction Recovery",
+	// 	year: "2025",
+	// 	authors: ["Junzhe Wang", "Zhuoran Yao", "Lydia Li"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2508.20996",
+	// 	studyWebsite: null,
+	// 	dataset: "",
+	// 	code: null,
+	// 	personalisation: true,
+	// 	strategy: true,
+	// },
+	{
+		title:
+			"ChatCLIDS: Simulating Persuasive AI Dialogues to Promote Closed-Loop Insulin Adoption in Type 1 Diabetes Care",
+		year: "2026",
+		authors: ["Zhuoran Yao", "Tanya Chafekar", "Junzhe Wang"],
+		description: "",
+		paper: null,
+		studyWebsite: null,
+		dataset: null,
+		code: "https://github.com/talha1503/ChatCLIDS",
+		personalisation: true,
+		strategy: true,
+		taxonomy: "dialogue-multi",
+	},
+	{
+		title: "Planning Without Search: Refining Frontier LLMs with Offline Goal-Conditioned RL",
+		year: "2025",
+		authors: ["Jason Hong", "Anca Dragan", "Sergey Levine"],
+		description: "",
+		paper: "https://arxiv.org/abs/2505.18098",
+		studyWebsite: "https://jxihong.github.io/pnlc_website/",
+		dataset: null,
+		code: null,
+		personalisation: false,
+		strategy: true,
+		taxonomy: "dialogue-multi",
+	},
+	{
+		title: "Deceive, Detect, and Disclose: Large Language Models Play Mini-Mafia",
+		year: "2025",
+		authors: ["Diogo B. Costa", "Ricardo Vicente"],
+		description: "",
+		paper: "https://arxiv.org/abs/2509.23023",
+		studyWebsite: null,
+		dataset: {
+			url: "https://github.com/bastoscostadavi/llm-mafia-game/tree/main/mini-mafia-benchmark",
+			name: "Game Logs",
+			description: "",
+		},
+		code: "https://github.com/bastoscostadavi/llm-mafia-game",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "game",
+	},
+	{
+		title:
+			"Democratizing Diplomacy: A Harness for Evaluating Any Large Language Model on Full-Press Diplomacy",
+		year: "2026",
+		authors: ["Aiden Duffy", "Samuel J. Paech", "Isha Shastri"],
+		description: "",
+		paper: null,
+		studyWebsite: null,
+		dataset: null,
+		code: "https://github.com/GoodStartLabs/AI_Diplomacy",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "game",
+	},
+	{
+		title: "Would You Like to Make a Donation? A Dialogue System to Persuade You to Donate",
+		year: "2024",
+		authors: ["Yuling Song", "Hui Wang"],
+		description: "",
+		paper: "https://aclanthology.org/2024.lrec-main.1540/",
+		studyWebsite: null,
+		dataset: null,
+		code: "https://github.com/QbethQ/PersuasiveDialogue",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "supervised",
+	},
+	// {
+	// 	title:
+	// 		"How Do LLMs Persuade? Linear Probes Can Uncover Persuasion Dynamics in Multi-Turn Conversations",
+	// 	year: "2025",
+	// 	authors: ["Brandon Jaipersaud", "David Krueger", "Ekdeep Singh Lubana"],
+	// 	description: "",
+	// 	paper: "https://arxiv.org/abs/2508.05625",
+	// 	studyWebsite: null,
+	// 	dataset: null,
+	// 	code: null,
+	// 	personalisation: true,
+	// 	strategy: true,
+	// },
+	{
+		title:
+			"Persuasiveness of Generated Free-Text Rationales in Subjective Decisions: A Case Study on Pairwise Argument Ranking",
+		year: "2024",
+		authors: ["Mohammed Elaraby", "Diane Litman", "Xiao-Li Li"],
+		description: "",
+		paper: null,
+		studyWebsite: null,
+		dataset: {
+			url: "https://github.com/EngSalem/Free-text-rationale-persuasion/tree/main/data",
+			name: "IBM-9k/IBM-30k Rationales",
+			description: "",
+		},
+		code: "https://github.com/EngSalem/Free-text-rationale-persuasion",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "prompt",
+	},
+	{
+		title:
+			"Dynamic Knowledge Integration for Evidence-Driven Counter-Argument Generation with Large Language Models",
+		year: "2025",
+		authors: ["Alikhan Yeginbergen", "Maite Oronoz", "Rodrigo Agerri"],
+		description: "",
+		paper: null,
+		studyWebsite: null,
+		dataset: "https://github.com/anaryegen/counter-argument-generation",
+		code: "https://github.com/anaryegen/counter-argument-generation",
+		personalisation: false,
+		strategy: true,
+		taxonomy: "prompt",
 	},
 ];
 
@@ -487,6 +767,32 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
 			data-filter="hasCode">Has code</button
 		>
+		<span class="opacity-20 mx-1">|</span>
+		<span class="opacity-50">Method:</span>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:prompt">Prompt-based</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:supervised">Supervised</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:dialogue-single">Single-turn</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:dialogue-multi">Multi-turn</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:dialogue-mixed">Mixed</button
+		>
+		<button
+			class="filter-btn border-accent/40 text-accent/70 rounded border px-3 py-1 transition-colors"
+			data-filter="tx:game">Game</button
+		>
 	</div>
 
 	<div class="overflow-x-auto">
@@ -494,6 +800,7 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 			<thead>
 				<tr class="border-accent/30 border-b-2">
 					<th class="pr-6 pb-3 text-left font-semibold">Study</th>
+					<th class="pr-6 pb-3 text-left font-semibold whitespace-nowrap">Taxonomy</th>
 					<th
 						class="cursor-help pr-4 pb-3 text-center font-semibold whitespace-nowrap"
 						data-tooltip="Includes personalisation analysis"
@@ -521,6 +828,7 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 								getResourceLinks(resource.dataset).some((dl) => !!getResourceHref(dl)) ? "1" : "0"
 							}
 							data-has-code={resource.code ? "1" : "0"}
+							data-taxonomy={resource.taxonomy ?? ""}
 							data-search={`${resource.title} ${getShortAuthors(resource.authors)}`.toLowerCase()}
 						>
 							<td class="min-w-[220px] py-3 pr-6 align-top">
@@ -541,6 +849,25 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 									{resource.year && resource.authors.length > 0 && " · "}
 									{getShortAuthors(resource.authors)}
 								</p>
+							</td>
+							<td class="py-3 pr-6 align-top whitespace-nowrap">
+								{(() => {
+									const parts = resource.taxonomy ? taxonomyLabels[resource.taxonomy] : null;
+									if (!parts) return null;
+									return (
+										<div class="flex flex-col gap-0.5 text-xs leading-tight">
+											{parts.map((part, i) => {
+												const isLeaf = i === parts.length - 1;
+												const label = isLeaf && parts.length > 2 ? `(${part})` : part;
+												return (
+													<span class={i === 1 ? "" : "opacity-50"}>
+														{label}
+													</span>
+												);
+											})}
+										</div>
+									);
+								})()}
 							</td>
 							<td class="py-3 pr-4 text-center align-top">
 								{resource.personalisation ? (
@@ -646,6 +973,7 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 
 		function applyFilters() {
 			const q = search.value.toLowerCase().trim();
+			const txActive = [...active].filter((k) => k.startsWith("tx:")).map((k) => k.slice(3));
 			rows.forEach((row) => {
 				const d = row.dataset;
 				const show =
@@ -653,7 +981,8 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 					(!active.has("personalisation") || d.personalisation === "1") &&
 					(!active.has("strategy") || d.strategy === "1") &&
 					(!active.has("hasData") || d.hasData === "1") &&
-					(!active.has("hasCode") || d.hasCode === "1");
+					(!active.has("hasCode") || d.hasCode === "1") &&
+					(txActive.length === 0 || txActive.includes(d.taxonomy ?? ""));
 				row.style.display = show ? "" : "none";
 			});
 		}

@@ -40,6 +40,61 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 				<strong>Codebases</strong> — evaluation frameworks and tools
 			</li>
 		</ul>
+		<h3>Taxonomy</h3>
+		<p>Studies evaluating LLM persuasiveness are organized using the following taxonomy:</p>
+		<div class="not-prose my-6 overflow-x-auto">
+			<div id="tax-root" class="relative pb-2" style="min-width:500px">
+				<div class="tf-tree">
+					<div class="tf-node">
+						<div class="tf-label tf-root-label">Automated Textual<br />Persuasion Evaluation</div>
+						<div class="tf-ch">
+
+							<div class="tf-node tf-hl">
+								<div class="tf-label" data-tooltip="Assess the model's persuasive capabilities">LLM<br />Persuasiveness</div>
+								<div class="tf-ch">
+
+									<div class="tf-node tf-hl">
+										<div class="tf-label" data-tooltip="Employ interactive LLM-driven scenarios">Simulation-based<br />Methods</div>
+										<div class="tf-ch">
+
+											<div class="tf-node tf-hl">
+												<div class="tf-label" data-tooltip="Success rate · belief change · persuasiveness score">Dialogue<br />Simulations</div>
+												<div class="tf-ch">
+													<div class="tf-node tf-hl"><div class="tf-label" data-tooltip="Multiple dialogue exchanges">Multi-turn</div></div>
+													<div class="tf-node tf-hl"><div class="tf-label" data-tooltip="Single persuasive message">Single-turn</div></div>
+													<div class="tf-node tf-hl"><div class="tf-label" data-tooltip="Single- and multi-turn">Mixed</div></div>
+												</div>
+											</div>
+
+											<div class="tf-node tf-hl">
+												<div class="tf-label" data-tooltip="Win rate · task scores">Game<br />Simulations</div>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="tf-node tf-hl">
+										<div class="tf-label" data-tooltip="Fixed dataset is the key evaluation element">Dataset-based<br />Methods</div>
+										<div class="tf-ch">
+											<div class="tf-node tf-hl"><div class="tf-label" data-tooltip="Win rate · rankings · ratings · prediction accuracy">Prompt-based<br />Methods</div></div>
+											<div class="tf-node tf-hl"><div class="tf-label" data-tooltip="Outcome prediction · success probability · persuasiveness score">Supervised<br />Scoring Models</div></div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="tf-node">
+								<div class="tf-label" data-tooltip="Assess any text">Text<br />Persuasiveness</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<svg id="tax-svg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+			</div>
+		</div>
+
 		<h3>How to contribute</h3>
 		<p>
 			If you know of a relevant resource that is missing, there are two ways to add it:
@@ -59,4 +114,115 @@ const withBase = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, ""
 			</ul>
 		</p>
 	</div>
+<style>
+	.tf-tree {
+		display: flex;
+		justify-content: center;
+		font-size: 0.65rem;
+		padding: 0.25rem 0;
+	}
+	.tf-node {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.tf-ch {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 5px;
+		padding-top: 22px;
+	}
+	.tf-label {
+		border: 1px solid currentColor;
+		border-radius: 4px;
+		padding: 3px 6px;
+		text-align: center;
+		line-height: 1.4;
+		opacity: 0.45;
+	}
+	.tf-label[data-tooltip] {
+		cursor: help;
+	}
+	.tf-root-label {
+		font-weight: 600;
+		opacity: 0.8;
+	}
+	.tf-hl > .tf-label {
+		border-color: rgb(59 130 246 / 0.55);
+		background-color: rgb(59 130 246 / 0.08);
+		color: rgb(59 130 246);
+		opacity: 1;
+	}
+</style>
+
+<script>
+	function drawTaxLines() {
+		const root = document.getElementById("tax-root");
+		const svg = document.getElementById("tax-svg") as SVGSVGElement | null;
+		if (!root || !svg) return;
+
+		svg.innerHTML = "";
+		const wRect = root.getBoundingClientRect();
+
+		function mkLine(x1: number, y1: number, x2: number, y2: number, blue: boolean) {
+			const el = document.createElementNS("http://www.w3.org/2000/svg", "line");
+			el.setAttribute("x1", String(x1)); el.setAttribute("y1", String(y1));
+			el.setAttribute("x2", String(x2)); el.setAttribute("y2", String(y2));
+			el.setAttribute("stroke", blue ? "rgb(59 130 246)" : "currentColor");
+			el.setAttribute("stroke-opacity", blue ? "0.45" : "0.3");
+			el.setAttribute("stroke-width", "1.5");
+			svg!.appendChild(el);
+		}
+
+		root.querySelectorAll<HTMLElement>(".tf-node").forEach((node) => {
+			const label = node.querySelector<HTMLElement>(":scope > .tf-label");
+			const ch = node.querySelector<HTMLElement>(":scope > .tf-ch");
+			if (!label || !ch) return;
+
+			const lr = label.getBoundingClientRect();
+			const px = lr.left + lr.width / 2 - wRect.left;
+			const py = lr.bottom - wRect.top;
+
+			const children = Array.from(ch.querySelectorAll<HTMLElement>(":scope > .tf-node"));
+			if (!children.length) return;
+
+			const isHl = node.classList.contains("tf-hl");
+			const cInfo = children.map((cn) => {
+				const cl = cn.querySelector<HTMLElement>(":scope > .tf-label")!;
+				const cr = cl.getBoundingClientRect();
+				return { x: cr.left + cr.width / 2 - wRect.left, y: cr.top - wRect.top };
+			});
+
+			const midY = (py + cInfo[0]!.y) / 2;
+			mkLine(px, py, px, midY, isHl);
+			mkLine(cInfo[0]!.x, midY, cInfo[cInfo.length - 1]!.x, midY, isHl);
+			cInfo.forEach((c) => mkLine(c.x, midY, c.x, c.y, isHl));
+		});
+	}
+
+	// Tooltip
+	const tip = document.createElement("div");
+	tip.style.cssText =
+		"position:fixed;z-index:50;max-width:16rem;padding:0.375rem 0.5rem;border-radius:0.25rem;font-size:0.75rem;line-height:1.4;pointer-events:none;display:none;background-color:var(--color-global-text);color:var(--color-global-bg);box-shadow:0 4px 6px -1px rgb(0 0 0/0.2)";
+	document.body.appendChild(tip);
+
+	document.querySelectorAll<HTMLElement>("[data-tooltip]").forEach((el) => {
+		el.addEventListener("mouseenter", () => {
+			tip.textContent = el.dataset.tooltip!;
+			tip.style.display = "block";
+		});
+		el.addEventListener("mousemove", (e) => {
+			tip.style.top = e.clientY + 14 + "px";
+			tip.style.left = e.clientX + "px";
+			tip.style.transform = "translateX(-50%)";
+		});
+		el.addEventListener("mouseleave", () => {
+			tip.style.display = "none";
+		});
+	});
+
+	document.addEventListener("DOMContentLoaded", drawTaxLines);
+	window.addEventListener("resize", drawTaxLines);
+</script>
 </PageLayout>
